@@ -1,5 +1,4 @@
 #!/bin/sh
-# 用法: ./upnp-add.sh [内网IP] [内网端口] [外网端口] [协议(TCP/UDP)]
 internal_ip="${1:-192.168.1.200}"
 internal_port="${2:-80}"
 external_port="${3:-8080}"
