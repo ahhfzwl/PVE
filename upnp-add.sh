@@ -1,15 +1,10 @@
 #!/bin/sh
 # 用法: ./upnp-add.sh [内网IP] [内网端口] [外网端口] [协议(TCP/UDP)]
-
 internal_ip="${1:-192.168.1.200}"
 internal_port="${2:-80}"
 external_port="${3:-8080}"
 protocol="${4:-TCP}"
-
-# 路由器UPnP控制端点
 router_url="http://192.168.1.1:52869/upnp/control/WANIPConn1"
-
-echo "[*] 发送UPnP端口映射请求..."
 curl -s -X POST "$router_url" \
      -H "Content-Type: text/xml; charset=utf-8" \
      -H "SOAPAction: \"urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping\"" \
@@ -28,6 +23,3 @@ curl -s -X POST "$router_url" \
     </u:AddPortMapping>
   </s:Body>
 </s:Envelope>"
-
-echo
-echo "[*] 完成"
