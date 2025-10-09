@@ -1,19 +1,22 @@
 #!/bin/sh
+# 用法: ./upnp-add.sh [内网IP] [内网端口] [外网端口] [协议(TCP/UDP)]
 
-protocol="${1:-TCP}"
-internal_ip="${2:-192.168.1.200}"
-internal_port="${3:-80}"
-external_port="${4:-8080}"
+internal_ip="${1:-192.168.1.200}"
+internal_port="${2:-80}"
+external_port="${3:-8080}"
+protocol="${4:-TCP}"
+
+# 路由器UPnP控制端点
 router_url="http://192.168.1.1:52869/upnp/control/WANIPConn1"
 
 echo "[*] 发送UPnP端口映射请求..."
-curl -s -X POST -H "Content-Type: text/xml; charset=utf-8" \
+curl -s -X POST "$router_url" \
+     -H "Content-Type: text/xml; charset=utf-8" \
      -H "SOAPAction: \"urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping\"" \
      -d "<?xml version=\"1.0\"?>
-<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\"
-            s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">
+<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">
   <s:Body>
-    <m:AddPortMapping xmlns:m=\"urn:schemas-upnp-org:service:WANIPConnection:1\">
+    <u:AddPortMapping xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">
       <NewRemoteHost></NewRemoteHost>
       <NewExternalPort>${external_port}</NewExternalPort>
       <NewProtocol>${protocol}</NewProtocol>
@@ -22,9 +25,9 @@ curl -s -X POST -H "Content-Type: text/xml; charset=utf-8" \
       <NewEnabled>1</NewEnabled>
       <NewPortMappingDescription>Manual-UPnP</NewPortMappingDescription>
       <NewLeaseDuration>0</NewLeaseDuration>
-    </m:AddPortMapping>
+    </u:AddPortMapping>
   </s:Body>
-</s:Envelope>" \
-     "${router_url}"
+</s:Envelope>"
+
 echo
 echo "[*] 完成"
