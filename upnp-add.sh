@@ -1,7 +1,7 @@
 #!/bin/sh
 internal_ip="${1:-192.168.1.200}"
 internal_port="${2:-80}"
-external_port="${3:-8080}"
+external_port="${3:-8}"
 protocol="${4:-TCP}"
 router_url="http://192.168.1.1:52869/upnp/control/WANIPConn1"
 curl -s -X POST "$router_url" \
