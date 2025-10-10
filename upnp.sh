@@ -27,4 +27,3 @@ curl -s -X POST "$router_url" \
 </s:Envelope>"
 echo "${Public_addr}:${Public_port}" > /tmp/natmap.log
 echo "${Public_addr}:${Public_port}"
-killall natmap 2>/dev/null
