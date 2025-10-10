@@ -1,30 +1,29 @@
-protocol="$1"
-private_ip="$2"
-private_port="$3"
-public_ip="$4"
-public_port="$5"
+#!/bin/sh
+Public_addr="$1"
+Public_port="$2"
+IP4P="$3"
+Bind_port="$4"
+Protocol="$5"
+Private_addr="$6"
+Private_port="80"
 
- curl -X POST -d "json={\"listen_port\":$public_port}" -H "Content-Type: application/x-www-form-urlencoded" "http://127.0.0.1:9090/api/v2/app/setPreferences"
+router_url="http://192.168.1.1:52869/upnp/control/WANIPConn1"
 
-curl -X POST -H "Content-Type: text/xml; charset=utf-8" \
-                        -H "SOAPAction: \"urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping\"" \
-                        -H "User-Agent: curl/8.0.0 (Natter)" \
-                        -H "Host: 192.168.5.1:52869" \
-                        -H "Accept: */*" \
-                        -H "Connection: close" \
-                        -d "<?xml version=\"1.0\" encoding=\"utf-8\"?>
-<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\"
-  s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">
+curl -s -X POST "$router_url" \
+     -H "Content-Type: text/xml; charset=utf-8" \
+     -H "SOAPAction: \"urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping\"" \
+     -d "<?xml version=\"1.0\"?>
+<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">
   <s:Body>
-    <m:AddPortMapping xmlns:m=\"urn:schemas-upnp-org:service:WANIPConnection:1\">
+    <u:AddPortMapping xmlns:u=\"urn:schemas-upnp-org:service:WANIPConnection:1\">
       <NewRemoteHost></NewRemoteHost>
-      <NewExternalPort>$private_port</NewExternalPort>
-      <NewProtocol>$protocol</NewProtocol>
-      <NewInternalPort>$public_port</NewInternalPort>
-      <NewInternalClient>$private_ip</NewInternalClient>
+      <NewExternalPort>${Bind_port}</NewExternalPort>
+      <NewProtocol>${Protocol^^}</NewProtocol>
+      <NewInternalPort>${Private_port}</NewInternalPort>
+      <NewInternalClient>${Private_addr}</NewInternalClient>
       <NewEnabled>1</NewEnabled>
-      <NewPortMappingDescription>qbittorrent</NewPortMappingDescription>
-      <NewLeaseDuration>604800</NewLeaseDuration>
-    </m:AddPortMapping>
+      <NewPortMappingDescription>Manual-UPnP</NewPortMappingDescription>
+      <NewLeaseDuration>0</NewLeaseDuration>
+    </u:AddPortMapping>
   </s:Body>
-</s:Envelope>" "http://192.168.5.1:52869/upnp/control/WANIPConn1"
+</s:Envelope>"
