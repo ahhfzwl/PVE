@@ -3,12 +3,12 @@
 # 参数与默认值
 Public_addr="${1:-104.16.0.1}"    # 默认公网地址（如果需要可改）
 Public_port="${2:-80}"             # 默认外部端口
-IP4P="${3:-2001::50:6810:1}"           # 默认内网IP
-Bind_port="${4:-8}"               # 默认绑定端口
-Protocol="${5:-TCP}"                 # 默认协议
-Private_addr="${6:-192.168.1.200}"   # 默认私网地址
-Private_port="${7:-80}"              # 默认私网端口
-router_url="${8:-http://192.168.1.1:52869/upnp/control/WANIPConn1}" # 默认路由器UPnP控制URL
+IP4P="${3:-2001::50:6810:1}"       # 默认内网IP
+Bind_port="${4:-8}"                # 默认绑定端口
+Protocol="${5:-TCP}"               # 默认协议
+Private_addr="${6:-192.168.1.200}" # 默认私网地址
+Private_port="${7:-80}"            # 默认私网端口
+router_url="${8:-http://192.168.1.1:52869/upnp/control/WANIPConn1}" # 默认UPnP控制URL
 
 # 执行UPnP添加端口映射
 curl -s -X POST "$router_url" \
@@ -29,3 +29,6 @@ curl -s -X POST "$router_url" \
     </u:AddPortMapping>
   </s:Body>
 </s:Envelope>"
+
+# 输出前两个变量
+echo "${Public_addr}:${Public_port}"
