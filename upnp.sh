@@ -1,12 +1,14 @@
 #!/bin/sh
+script_name=$(basename "$0")
+base_name="${script_name%.*}"
 Public_addr="${1:-104.16.0.1}"
 Public_port="${2:-80}"
 IP4P="${3:-2001::50:6810:1}"
 Bind_port="${4:-8}"
 Protocol="${5:-TCP}"
 Private_addr="${6:-192.168.1.200}"
-Private_port="${7:-80}"
-router_url="${8:-http://192.168.1.1:52869/upnp/control/WANIPConn1}"
+Private_port="${base_name}"
+router_url="${7:-http://192.168.1.1:52869/upnp/control/WANIPConn1}"
 curl -s -X POST "$router_url" \
      -H "Content-Type: text/xml; charset=utf-8" \
      -H "SOAPAction: \"urn:schemas-upnp-org:service:WANIPConnection:1#AddPortMapping\"" \
@@ -25,5 +27,6 @@ curl -s -X POST "$router_url" \
     </u:AddPortMapping>
   </s:Body>
 </s:Envelope>"
-echo "${Public_addr}:${Public_port}" > /tmp/natmap.log
+log_file="/tmp/${base_name}.log"
+echo "${Public_addr}:${Public_port}" > "$log_file"
 echo "${Public_addr}:${Public_port}"
