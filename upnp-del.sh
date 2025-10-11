@@ -1,12 +1,9 @@
 #!/bin/sh
 
-# 传参与默认值
-port="${1:-8080}"       # 第一个参数：外部端口，默认 8080
-proto="${2:-TCP}"       # 第二个参数：协议，默认 TCP
-router_url="http://192.168.1.1:52869/upnp/control/WANIPConn1"   # 根据你的路由器实际修改
+port="${1:-8080}"
+proto="${2:-TCP}"
 
-# 执行删除请求
-curl -s -X POST "$router_url" \
+curl -s -X POST "http://192.168.1.1:52869/upnp/control/WANIPConn1" \
   -H "Content-Type: text/xml; charset=utf-8" \
   -H 'SOAPAction: "urn:schemas-upnp-org:service:WANIPConnection:1#DeletePortMapping"' \
   -d "<?xml version=\"1.0\"?>
