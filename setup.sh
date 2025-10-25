@@ -4,7 +4,7 @@ export DEBIAN_FRONTEND=noninteractive
 
 cat > /etc/apt/sources.list.d/ubuntu.sources <<EOF
 Types: deb
-URIs: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+URIs: http://mirrors.tuna.tsinghua.edu.cn/ubuntu/
 Suites: noble noble-updates noble-backports noble-security
 Components: main restricted universe multiverse
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
