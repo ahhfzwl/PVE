@@ -12,8 +12,8 @@ deb-src http://mirrors.tuna.tsinghua.edu.cn/debian/ bookworm-updates main contri
 " > /etc/apt/sources.list'
 rm -rf /etc/apt/sources.list.d
 
-apt-get update && \
-apt-get install -y ca-certificates cron nano wget iputils-ping net-tools iproute2 dnsutils socat openssh-server htop unzip locales tzdata
+apt update
+apt install -y systemctl ca-certificates curl cron nano wget iputils-ping net-tools iproute2 dnsutils socat openssh-server htop unzip locales tzdata
 
 echo "Asia/Shanghai" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
