@@ -1,3 +1,7 @@
-apt -y autoremove ufw iptables
-
-curl -LkO -H "Host: github.com" --resolve g.com:443:20.27.177.113 "$(curl -s https://api.github.com/repos/SagerNet/sing-box/releases/latest | grep -o "https://github.com/SagerNet/sing-box/releases/download/.*/sing-box-.*-linux-$(uname -m | sed 's/x86_/amd/; s/aarch/arm/').tar.gz" | sort -V | head -n 1 | sed 's/github/g/' )"
+cat > /etc/apt/sources.list.d/ubuntu.sources << 'EOF'
+Types: deb
+URIs: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
+Suites: noble noble-updates noble-backports noble-security
+Components: main restricted universe multiverse
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+EOF
