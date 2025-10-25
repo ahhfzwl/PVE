@@ -1,0 +1,26 @@
+# 检查 IPv6 是否被禁用
+cat /proc/sys/net/ipv6/conf/all/disable_ipv6
+cat /proc/sys/net/ipv6/conf/tb/disable_ipv6
+
+# 如果返回 1 就启动它。
+echo 0 | sudo tee /proc/sys/net/ipv6/conf/all/disable_ipv6
+echo 0 | sudo tee /proc/sys/net/ipv6/conf/tb/disable_ipv6
+
+# 彻底删除旧接口
+ip link del tb
+
+# 重新执行隧道配置步骤
+ip tunnel add tb mode sit remote 66.220.18.42 local 172.17.0.2 ttl 64
+ip link set tb up
+ip -6 addr add 2001:470:c:1074::2/64 dev tb
+ip -6 route add default via 2001:470:c:1074::1 dev tb
+
+# 检查配置是否成功
+ip -6 addr show tb
+ip -6 route show default
+
+# Ping HE 服务器隧道地址
+ping 2001:470:c:1074::1
+
+# Ping 公网 IPv6 地址
+ping 2001:4860:4860::8888
