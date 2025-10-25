@@ -15,12 +15,10 @@ rm -rf /etc/apt/sources.list.d
 apt update
 apt install -y systemctl ca-certificates curl cron nano wget iputils-ping net-tools iproute2 dnsutils socat openssh-server htop unzip locales tzdata
 
+rm -f /etc/localtime
+ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 echo "Asia/Shanghai" > /etc/timezone
 dpkg-reconfigure -f noninteractive tzdata
-
-locale-gen zh_CN.UTF-8
-update-locale LANG=zh_CN.UTF-8
-export LANG=zh_CN.UTF-8
 
 echo 'root:1224' | chpasswd
 sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config
