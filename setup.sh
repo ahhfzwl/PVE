@@ -2,7 +2,7 @@
 set -e
 export DEBIAN_FRONTEND=noninteractive
 
-cat <<EOF > /etc/apt/sources.list.d/ubuntu.sources
+cat > /etc/apt/sources.list.d/ubuntu.sources <<EOF
 Types: deb
 URIs: https://mirrors.tuna.tsinghua.edu.cn/ubuntu/
 Suites: noble noble-updates noble-backports noble-security
@@ -31,7 +31,7 @@ service cron start
 service ssh start
 
 if ! grep -q '# AUTO_START_CRON_SSH' /root/.bashrc; then
-cat <<'EOF' >> /root/.bashrc
+cat >> /root/.bashrc <<\EOF
 
 # AUTO_START_CRON_SSH
 if [ "$$" -eq 1 ]; then
