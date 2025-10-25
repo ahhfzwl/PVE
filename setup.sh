@@ -1,8 +1,5 @@
 #!/bin/bash
 set -e
-
-echo "=== 容器初始化开始 ==="
-
 export DEBIAN_FRONTEND=noninteractive
 
 cat <<EOF > /etc/apt/sources.list.d/ubuntu.sources
@@ -44,5 +41,3 @@ if [ "$$" -eq 1 ]; then
 fi
 EOF
 fi
-
-echo "✅ 容器初始化完成，cron 和 ssh 已启动"
