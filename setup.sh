@@ -31,7 +31,7 @@ service cron start
 service ssh start
 
 if ! grep -q '# AUTO_START_CRON_SSH' /root/.bashrc; then
-cat >> /root/.bashrc <<'EOF'
+cat <<'EOF' >> /root/.bashrc
 
 # AUTO_START_CRON_SSH
 if [ "$$" -eq 1 ]; then
