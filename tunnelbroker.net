@@ -13,7 +13,7 @@ ip link del tb
 ip tunnel add tb mode sit remote 72.52.104.74 local 172.17.0.2 ttl 64
 ip link set tb up
 ip -6 addr add 2001:470:1f04:2b8::2/64 dev tb
-ip -6 route add default via 2001:470:c:1074::1 dev tb
+ip -6 route add default via 2001:470:1f04:2b8::1 dev tb
 
 # 检查配置是否成功
 ip -6 addr show tb
