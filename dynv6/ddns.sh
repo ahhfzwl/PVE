@@ -12,4 +12,4 @@ if [ "$OLD" = "$NEW" ]; then
   exit
 fi
 curl -fsS "http://dynv6.com/api/update?hostname=$HOST&ipv6prefix=auto&token=$TOKEN"
-echo $NEW > $file
+echo $NEW > $FILE
