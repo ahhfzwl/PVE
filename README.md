@@ -17,7 +17,7 @@ pct set 100 -mp0 /share,mp=/share
 pct start 100
 ```
 ```sh
-wget -O $HOME/.dynv6.sh https://raw.githubusercontent.com/ahhfzwl/PVE/refs/heads/main/dynv6.sh
+wget -O $HOME/.dynv6.sh https://raw.githubusercontent.com/ahhfzwl/PVE/main/dynv6.sh
 chmod +x $HOME/.dynv6.sh
 token=tVfZgfE19REdPwy2jThrfCm58URR $HOME/.dynv6.sh cfnat.dynv6.net
 ```
