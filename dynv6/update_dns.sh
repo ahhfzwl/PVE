@@ -5,9 +5,9 @@ if [ -z "$HOST" -o -z "$TOKEN" ]; then
   exit 1
 fi;
 
-OLD=$(dig +short AAAA $HOST )
+OLD=$(dig +short AAAA $HOST)
 NEW=$(dig -6 TXT +short o-o.myaddr.l.google.com @ns1.google.com | tr -d '"')
 
 if [ "$OLD" != "$NEW" ] ; then
-  curl "http://ipv6.dynv6.com/api/update?hostname=$HOST&ipv6prefix=auto&token=$TOKEN"
+  curl "http://ipv6.dynv6.com/api/update?hostname=$HOST&ipv6=auto&token=$TOKEN"
 fi
