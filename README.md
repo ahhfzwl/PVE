@@ -19,7 +19,7 @@ pct start 100
 ```sh
 wget -O $HOME/.dynv6.sh https://gist.githubusercontent.com/corny/7a07f5ac901844bd20c9/raw/3aec27630e25e47d50066d65687bd0c6dd266e83/dynv6.sh
 chmod +x $HOME/.dynv6.sh
-token=ddtVfZgfE19REdPwy2jThrfCm58URR $HOME/.dynv6.sh cfnat.dynv6.net
+token=tVfZgfE19REdPwy2jThrfCm58URR $HOME/.dynv6.sh cfnat.dynv6.net
 ```
 ```
 apt -y autoremove ufw iptables
