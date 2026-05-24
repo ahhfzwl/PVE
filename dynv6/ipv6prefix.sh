@@ -16,5 +16,5 @@ fi
 if [ "$OLD" = "$NEW" ]; then
     echo "IP unchanged: $OLD"
 else
-    curl "http://ipv6.dynv6.com/api/update?hostname=$HOST&ipv6=${NEW}/64&token=$TOKEN"
+    curl "http://ipv6.dynv6.com/api/update?hostname=$HOST&ipv6=$NEW/64&token=$TOKEN"
 fi
