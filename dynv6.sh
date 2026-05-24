@@ -12,5 +12,5 @@ if [ "$OLD" = "$NEW" ]; then
   echo "IPv6 address unchanged"
   exit
 fi
-curl "http://dynv6.com/api/update?hostname=$hostname&ipv6prefix=auto&token=$token"
-echo $current > $file
+curl -fsS "http://dynv6.com/api/update?hostname=$hostname&ipv6prefix=auto&token=$token"
+echo $NEW > $file
