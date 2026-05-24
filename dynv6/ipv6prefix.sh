@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ -z "$HOST" ] || [ -z "$TOKEN" ]; then
-    echo "HOST=cmsin.dynv6.net TOKEN=ddtVfZgfE19REdPwy2jThrfCm58URR ./update_dns.sh"
+    echo "HOST=cmsin.dynv6.net TOKEN=ddtVfZgfE19REdPwy2jThrfCm58URR ./ipv6prefix.sh"
     exit 1
 fi
 
@@ -13,9 +13,8 @@ if [ -z "$NEW" ]; then
     exit 1
 fi
 
-if [ "$OLD" != "$NEW" ]; then
-    # 加上 /64 前缀
-    curl "http://ipv6.dynv6.com/api/update?hostname=$HOST&ipv6=${NEW}/64&token=$TOKEN"
-else
+if [ "$OLD" = "$NEW" ]; then
     echo "IP unchanged: $OLD"
+else
+    curl "http://ipv6.dynv6.com/api/update?hostname=$HOST&ipv6=${NEW}/64&token=$TOKEN"
 fi
