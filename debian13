@@ -1,5 +1,4 @@
 sed -i 's/deb.debian.org/mirrors.huaweicloud.com/g' /etc/apt/sources.list.d/debian.sources
-sed -i "s@http://security.debian.org@https://mirrors.huaweicloud.com@g" /etc/apt/sources.list.d/debian.sources
 
 apt update
 export DEBIAN_FRONTEND=noninteractive
