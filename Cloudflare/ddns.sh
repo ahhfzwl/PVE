@@ -21,13 +21,16 @@ NEW=$(curl -6 -s test.ipw.cn)
 [ "$OLD" = "$NEW" ] && echo "$(date) $NEW unchanged" && exit 0
 
 # 获取记录ID
-ID=$(curl -s "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records?type=AAAA&name=$DOMAIN" -H "Authorization: Bearer $TOKEN" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
+ID=$(curl -s "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records?type=AAAA&name=$DOMAIN" \
+  -H "Authorization: Bearer $TOKEN" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
 
 [ -z "$ID" ] && echo "ID not found" && exit 1
 
 # 更新记录
-DATA='{"type":"AAAA","name":"'"$DOMAIN"'","content":"'"$NEW"'","ttl":1,"proxied":false}'
-STATUS=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records/$ID" -H "Authorization: Bearer $TOKEN" -H "Content-Type:application/json" -d "$DATA" | grep -o '"success":[a-z]*' | cut -d':' -f2)
+STATUS=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records/$ID" \
+  -H "Authorization: Bearer $TOKEN" -H "Content-Type:application/json" \
+  -d '{"type":"AAAA","name":"'"$DOMAIN"'","content":"'"$NEW"'","ttl":1,"proxied":false}' \
+  | grep -o '"success":[a-z]*' | cut -d':' -f2)
 
 if [ "$STATUS" = "true" ]; then
     echo "$NEW" > "$CACHE"
