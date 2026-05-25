@@ -1,25 +1,37 @@
 #!/bin/sh -e
-zone=$1
-token=$2
-domain=$3
-[ -e /tmp/$domain ] && old=$(cat /tmp/$domain)
-cloudflaredns(){
-    id=$(curl -s "https://api.cloudflare.com/client/v4/zones/$zone/dns_records" -H "Authorization: Bearer $token" | sed -e 's/"id"/\n/g' | grep -w "AAAA" | grep "\"name\":\"$domain\"" | awk -F\" '{print $2}')
-	if [ -z "$id" ]; then
-		echo "ID not found"
-	else
-		status=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$zone/dns_records/$id" -H "Authorization: Bearer $token" -H "Content-Type:application/json" -d '{"type":"'"AAAA"'","name":"'"$domain"'","content":"'"$new"'","ttl":1,"proxied":false}' | sed 's/.*"success":\([a-z]\+\).*/\1/')
-		if [ "$status" = "true" ]; then
-			echo $new > /tmp/$domain
-		fi
-		echo "$(date) $new $status"
-	fi
-}
-new=$(curl -6 test.ipw.cn)
-if [ -z "$new" ]; then
-	echo "No new IP found"
-elif [ "$old" = "$new" ]; then
-	echo "$(date) $new IP address unchanged"
+
+# 检查参数
+if [ $# -ne 3 ]; then
+    echo "Usage: $0 <zone_id> <api_token> <domain>"
+    echo "Example: $0 abc123 def456 mydomain.example.com"
+    exit 1
+fi
+
+ZONE=$1
+TOKEN=$2
+DOMAIN=$3
+CACHE="/tmp/$DOMAIN"
+[ -f "$CACHE" ] && OLD=$(cat "$CACHE")
+
+# 获取当前IPv6
+NEW=$(curl -6 -s test.ipw.cn)
+[ -z "$NEW" ] && echo "No new IP found" && exit 1
+
+# IP未变化则退出
+[ "$OLD" = "$NEW" ] && echo "$(date) $NEW unchanged" && exit 0
+
+# 获取记录ID
+ID=$(curl -s "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records?type=AAAA&name=$DOMAIN" -H "Authorization: Bearer $TOKEN" | grep -o '"id":"[^"]*"' | head -1 | cut -d'"' -f4)
+
+[ -z "$ID" ] && echo "ID not found" && exit 1
+
+# 更新记录
+DATA='{"type":"AAAA","name":"'"$DOMAIN"'","content":"'"$NEW"'","ttl":1,"proxied":false}'
+STATUS=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$ZONE/dns_records/$ID" -H "Authorization: Bearer $TOKEN" -H "Content-Type:application/json" -d "$DATA" | grep -o '"success":[a-z]*' | cut -d':' -f2)
+
+if [ "$STATUS" = "true" ]; then
+    echo "$NEW" > "$CACHE"
+    echo "$(date) $NEW updated"
 else
-	cloudflaredns $new
+    echo "$(date) update failed"
 fi
