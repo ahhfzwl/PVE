@@ -1,7 +1,5 @@
 sed -i 's/deb.debian.org/mirrors.huaweicloud.com/g' /etc/apt/sources.list.d/debian.sources
-
 apt update
 export DEBIAN_FRONTEND=noninteractive
-# systemctl出错原因 gpg
 apt install -y openssh-server cron curl sudo nano wget iputils-ping net-tools iproute2 dnsutils socat htop unzip locales tzdata
 echo 'root:1224' | chpasswd && sed -i 's/^#\?Port .*/Port 2095/g;s/^#\?PermitRootLogin.*/PermitRootLogin yes/g' /etc/ssh/sshd_config && service ssh restart
