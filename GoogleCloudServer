@@ -2,7 +2,7 @@
   区域：us-west1
   通用：e2-micro
 操作系统：
-  版本：debian13
+  版本：ubuntu26 (debian用的fastly会额外收费)
   磁盘：标准的永久磁盘
   大小：30
 数据保护：
