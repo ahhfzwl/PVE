@@ -1,0 +1,4 @@
+# 停止服务
+sudo systemctl stop google-osconfig-agent
+# 禁用服务（防止开机自启）
+sudo systemctl disable google-osconfig-agent
