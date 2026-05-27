@@ -1,4 +1,9 @@
-# 停止服务
-sudo systemctl stop google-osconfig-agent
-# 禁用服务（防止开机自启）
-sudo systemctl disable google-osconfig-agent
+机器配置：
+  区域：us-west1
+  通用：e2-micro
+操作系统：
+  版本：debian13
+  磁盘：标准的永久磁盘
+  大小：30
+数据保护：
+  备份：无备份
