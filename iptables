@@ -1,0 +1,14 @@
+#查看规则
+iptables -L INPUT -n -v --line-numbers
+
+#删除规则
+iptables -D INPUT -p tcp --dport 80 -j ACCEPT
+
+#插入规则
+iptables -I INPUT 1 -p tcp --dport 443 -j ACCEPT
+
+#保存规则
+netfilter-persistent save
+
+#重启防火墙
+systemctl restart netfilter-persistent
