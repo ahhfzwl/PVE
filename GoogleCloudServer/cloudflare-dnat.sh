@@ -1,5 +1,5 @@
 #!/bin/bash
-
+#curl -s https://raw.githubusercontent.com/ahhfzwl/PVE/main/GoogleCloudServer/cloudflare-dnat.sh | sudo bash -s -- 64.186.225.82
 TARGET_IP=${1:-"64.186.225.82"}
 CF_IP_LIST="/tmp/cf_ips.txt"
 
