@@ -1,0 +1,5 @@
+ipset create cf hash:net -exist
+
+ipset add cf 104.16.0.0/12
+ipset add cf 162.158.0.0/15
+ipset add cf 172.64.0.0/13
