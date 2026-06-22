@@ -1,4 +1,4 @@
-iptables -t nat -L -n -v --line-numbers #指定nat表 列出规则列表 显示真实IP 列出详细信息 列出编号
+iptables -t nat -L -n -v --line-numbers
 
 ipset create cf hash:net -exist
 ipset list cf
