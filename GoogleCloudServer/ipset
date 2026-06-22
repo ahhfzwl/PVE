@@ -1,4 +1,6 @@
 ipset create cf hash:net -exist
+ipset list cf
+ipset del cf 104.16.0.0/12
 ipset flush cf
 ipset add cf 104.16.0.0/12
 ipset add cf 162.158.0.0/15
