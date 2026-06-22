@@ -1,0 +1,7 @@
+curl -s https://www.cloudflare.com/ips-v4 -o /tmp/cf.txt
+
+iptables -t nat -L -n -v --line-numbers
+
+iptables -t nat -D OUTPUT -j CF_DNAT 2>/dev/null; iptables -t nat -F CF_DNAT 2>/dev/null; iptables -t nat -X CF_DNAT 2>/dev/null
+
+iptables -t nat -N CF_DNAT; iptables -t nat -A OUTPUT -j CF_DNAT; while read ip; do iptables -t nat -A CF_DNAT -d $ip -p tcp -j DNAT --to-destination 64.186.225.82; done < /tmp/cf.txt
