@@ -1,3 +1,5 @@
+iptables -t nat -L -n -v --line-numbers #指定nat表 列出规则列表 显示真实IP 列出详细信息 列出编号
+
 ipset create cf hash:net -exist
 ipset list cf
 ipset del cf 104.16.0.0/12
@@ -6,7 +8,6 @@ ipset add cf 104.16.0.0/12
 ipset add cf 162.158.0.0/15
 ipset add cf 172.64.0.0/13
 
-iptables -t nat -L -n -v --line-numbers #指定nat表 列出规则列表 显示真实IP 列出详细信息 列出编号
 iptables -t nat -C OUTPUT -p tcp -m set --match-set cf dst -j DNAT --to-destination 64.186.225.82
 iptables -t nat -D OUTPUT -p tcp -m set --match-set cf dst -j DNAT --to-destination 64.186.225.82
 iptables -t nat -A OUTPUT -p tcp -m set --match-set cf dst -j DNAT --to-destination 64.186.225.82
