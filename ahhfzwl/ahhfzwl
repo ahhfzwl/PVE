@@ -9,10 +9,7 @@
 #SPEEDTEST测速
 mkdir speedtest && cd ./speedtest && wget https://install.speedtest.net/app/cli/ookla-speedtest-1.2.0-linux-x86_64.tgz && gunzip ookla-speedtest-1.2.0-linux-x86_64.tgz && tar -xvf ookla-speedtest-1.2.0-linux-x86_64.tar && chmod 777 speedtest && ./speedtest
 
-#列出公网地址 | sed文本编辑器 -n只输出结果 s/替换 .*inet6从行头到inet6 \([0-9a-f:]\+\)逐个查找[]内的字符并保存到第一个变量 .*后面的所有内容 /新内容 \1第一个变量的内容
 ip -6 addr list scope global | sed -n 's/.*inet6 \([0-9a-f:]\+\).*/\1/p' | head -n 1
-
-#获取ipv6地址 | 显示含有inet6的行 | 打印第2列参数 | 排除/以及后面的值 | 删除以fe开头的行 | 删除以::开头的行 | 输出结果
 ip -6 addr list scope global | grep 'inet6' | awk '{print $2}' | cut -d'/' -f1 | head -n 1
 
 ps aux | grep -v 'grep' | grep 'cron' #查找进程
