@@ -1,7 +1,7 @@
 #!/bin/bash
 
-NEW_IP="${1:-154.17.237.131}"
-NEW_PORT="${2:-18700}"
+NEW_IP="${1:-64.186.238.236}"
+NEW_PORT="${2:-443}"
 
 echo "目标 IP 设为: ${NEW_IP}"
 echo "目标端口设为: ${NEW_PORT}"
